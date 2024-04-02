@@ -18,6 +18,7 @@ class Product{
 
       // console.log('new product:', thisProduct);
     }
+    
     renderInMenu(){
       const thisProduct = this;
 

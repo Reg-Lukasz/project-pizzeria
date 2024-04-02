@@ -14,7 +14,8 @@
         ],
         "no-console": [
             "off"
-        ]
+        ],
+        "scss/at-extend-no-missing-placeholder": null
     },
     "globals": {
       "Handlebars": false
