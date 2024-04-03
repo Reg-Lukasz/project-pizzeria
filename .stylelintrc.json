@@ -1,6 +1,7 @@
 {
   "extends": "stylelint-config-recommended-scss",
   "rules": {
+    "scss/at-extend-no-missing-placeholder": null,
     "block-no-empty": true,
     "color-no-invalid-hex": true,
     "comment-empty-line-before": null,
