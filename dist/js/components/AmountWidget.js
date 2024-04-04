@@ -1,74 +1,68 @@
 import {select, settings} from '../settings.js';
+import BaseWidget from './BaseWidgets.js';
 
-class AmountWidget{
-    constructor(element){
-      const thisWidget = this;
+class AmountWidget extends BaseWidget{
+  constructor(element){
+    super(element, settings.amountWidget.defaultValue);
 
-      // console.log('Amount widget:', thisWidget);
-      // console.log('constructor arguments:', element);
+    const thisWidget = this;
 
-      thisWidget.getElements(element);
-      thisWidget.valueValidate();
-      thisWidget.setValue(thisWidget.input.value);
-      thisWidget.initActions();
-    }
+    // console.log('Amount widget:', thisWidget);
+    // console.log('constructor arguments:', element);
 
-    getElements(element){
-      const thisWidget = this;
+    thisWidget.getElements(element);
 
-      thisWidget.element = element;
-      thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
-      thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
-      thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
-    }
+    thisWidget.valueValidate();
 
-    valueValidate(){
-      const thisWidget = this;
+    thisWidget.initActions();
+  }
 
-      if(thisWidget.input.value === !undefined){
-        thisWidget.setValue(thisWidget.input.value);
-      } else {
-        thisWidget.setValue(settings.amountWidget.defaultValue);
-      }
-    }
+  getElements(){
+    const thisWidget = this;
 
-    setValue(value){
-      const thisWidget = this;
+    thisWidget.dom.input = thisWidget.dom.wrapper.querySelector(select.widgets.amount.input);
+    thisWidget.dom.linkDecrease = thisWidget.dom.wrapper.querySelector(select.widgets.amount.linkDecrease);
+    thisWidget.dom.linkIncrease = thisWidget.dom.wrapper.querySelector(select.widgets.amount.linkIncrease);
+  }
 
-      const newValue = parseInt(value);
+  valueValidate(){
+    const thisWidget = this;
 
-      /* TODO: Add validation */
-      if(thisWidget.value !== newValue && !isNaN(newValue) && newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax) {
-        thisWidget.value = newValue;
-        thisWidget.announce();
-      }
-
-      thisWidget.input.value = thisWidget.value;
-    }
-
-    initActions(){
-      const thisWidget = this;
-
-      thisWidget.input.addEventListener('change', function(){
-        thisWidget.setValue(thisWidget.input.value);
-      });
-      thisWidget.linkDecrease.addEventListener('click', function(event){
-        event.preventDefault();
-        thisWidget.setValue(thisWidget.value - 1);
-      });
-      thisWidget.linkIncrease.addEventListener('click', function(event){
-        event.preventDefault();
-        thisWidget.setValue(thisWidget.value + 1);
-      });
-    }
-    announce(){
-      const thisWidget = this;
-
-      const event = new CustomEvent('updated', {
-        bubbles: true
-      });
-      thisWidget.element.dispatchEvent(event);
+    if(thisWidget.dom.input.value === !undefined){
+      thisWidget.setValue(thisWidget.dom.input.value);
+    } else {
+      thisWidget.setValue(settings.amountWidget.defaultValue);
     }
   }
+
+  isValid(value){
+    return !isNaN(value)
+      && value >= settings.amountWidget.defaultMin 
+      && value <= settings.amountWidget.defaultMax;
+  }
+
+  renderValue(){
+    const thisWidget = this;
+
+    thisWidget.dom.input.value = thisWidget.value;
+  }
+
+  initActions(){
+    const thisWidget = this;
+
+    thisWidget.dom.input.addEventListener('change', function(){
+      // thisWidget.setValue(thisWidget.dom.input.value);
+      thisWidget.value = thisWidget.dom.input.value;
+    });
+    thisWidget.dom.linkDecrease.addEventListener('click', function(event){
+      event.preventDefault();
+      thisWidget.setValue(thisWidget.value - 1);
+    });
+    thisWidget.dom.linkIncrease.addEventListener('click', function(event){
+      event.preventDefault();
+      thisWidget.setValue(thisWidget.value + 1);
+    });
+  }
+}
 
 export default AmountWidget;
