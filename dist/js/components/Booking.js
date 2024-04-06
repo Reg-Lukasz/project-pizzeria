@@ -171,14 +171,17 @@ class Booking{
     thisBooking.dom.hourPicker = element.querySelector(select.widgets.hourPicker.wrapper);
     thisBooking.dom.tables = element.querySelectorAll(select.booking.tables);
     thisBooking.dom.tablesWrapper = element.querySelector(select.booking.tablesWrapper);
+    thisBooking.dom.phone = element.querySelector(select.booking.phone);
+    thisBooking.dom.address = element.querySelector(select.booking.address);
+    thisBooking.dom.formSubmit = element.querySelector(select.booking.formSubmit);
+    thisBooking.dom.starters = element.querySelectorAll(select.booking.starters);
+    thisBooking.starters = [];
   }
 
   initTables(){
     const thisBooking = this;
 
     thisBooking.element.addEventListener('click', function(event){
-      event.preventDefault();
-
       const clickedElement = event.target;
 
       const tableId = clickedElement.getAttribute(settings.booking.tableIdAttribute);
@@ -205,6 +208,35 @@ class Booking{
     });
   }
 
+  sendBooking(){
+    const thisBooking = this;
+
+    const url = settings.db.url + '/' + settings.db.bookings;
+
+    const payload = {
+      date: thisBooking.datePicker.value,
+      hour: thisBooking.hourPicker.value,
+      table: parseInt(thisBooking.selectedTable),
+      duration: parseInt(thisBooking.hoursAmount.value),
+      ppl: parseInt(thisBooking.peopleAmount.value),
+      starters: thisBooking.starters,
+      phone: thisBooking.dom.phone.value,
+      address: thisBooking.dom.address.value,
+    }
+    
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    };
+    
+    fetch(url, options);
+
+    console.log('payload', payload)
+  }
+
   initWidgets(){
     const thisBooking = this;
 
@@ -224,6 +256,23 @@ class Booking{
     })
 
     thisBooking.dom.tablesWrapper.addEventListener('click', thisBooking.initTables());
+
+    thisBooking.dom.formSubmit.addEventListener('submit', function(event){
+      event.preventDefault();
+      thisBooking.sendBooking();
+    })
+    
+    thisBooking.element.addEventListener('click', function(event){
+      const starter = event.target;
+      if(starter.getAttribute('type') === 'checkbox' && starter.getAttribute('name') === 'starter'){
+        if(starter.checked){
+          thisBooking.starters.push(starter.value);
+        } else if (!starter.checked){
+          const starterId = thisBooking.starters.indexOf(starter.value);
+          thisBooking.starters.splice(starterId, 1);
+        }
+      }
+    });
   }
 }
 
