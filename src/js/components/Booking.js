@@ -8,7 +8,7 @@ class Booking{
   constructor(element){
     const thisBooking = this;
 
-    thisBooking.selectedTable;
+    thisBooking.selectedTable = null;
 
     thisBooking.render(element);
     thisBooking.initWidgets();
@@ -234,7 +234,9 @@ class Booking{
     
     fetch(url, options);
 
-    console.log('payload', payload)
+    thisBooking.makeBooked(payload.date , payload.hour, payload.duration, payload.table);
+
+    // console.log('payload', payload)
   }
 
   initWidgets(){
@@ -257,7 +259,7 @@ class Booking{
 
     thisBooking.dom.tablesWrapper.addEventListener('click', thisBooking.initTables());
 
-    thisBooking.dom.formSubmit.addEventListener('submit', function(event){
+    thisBooking.dom.formSubmit.addEventListener('click', function(event){
       event.preventDefault();
       thisBooking.sendBooking();
     })
