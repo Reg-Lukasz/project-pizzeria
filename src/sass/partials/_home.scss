@@ -1,0 +1,174 @@
+// Global //
+
+.home-wrapper {
+    margin: ($base-size * 3.5) auto;
+    padding: ($base-size * 6) ($base-size * 4);
+    background: $color-light;
+    border-bottom: 1px solid lighten($color-dark, 70%);
+    border-radius: $radius;
+  }
+  
+  .row{
+    display: flex;
+    gap: $base-size;
+  }
+  
+  .inside-wrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: $radius;
+    position: relative;
+  
+    img{
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      border-radius: $radius;
+    }
+  }
+  
+  .row-bottom{
+    margin-top: $base-size;
+    margin-bottom: $base-size;
+  }
+  
+  // Top section //
+  
+  .home-top{
+    margin-bottom: $base-size * 8;
+  }
+  
+  .col-top{
+    flex: 1;
+    height: $base-size * 8;
+  
+    .bg{
+      background-color: $color-main;
+      flex-direction: column;
+    }
+  }
+  
+  .box{
+  
+    .text{
+      color: $color-light;
+      transition: $transition;
+      text-transform: uppercase;
+      font-family: $font-header;
+      font-size: $base-size * 2;
+      top: $base-size * 2.3;
+      margin: 0;
+    }
+  
+    .text-days{
+      font-size: $base-size * 1.5;
+      font-weight: $font-light;
+      margin: 0;
+    }
+  
+    .over{
+      position: absolute;
+    }
+  
+    a{
+      width: 100%;
+      height: 100%;
+      border-radius: $radius;
+    }
+  
+    .hover-text{
+      position: absolute;
+      color: $color-light;
+      bottom: $base-size * -4;
+      opacity: 0;
+      transition: $transition;
+    }
+  }
+  
+  .box:hover{
+  
+    .hover-text{
+      opacity: 1;
+      bottom: 0;
+    }
+  
+    .text{
+      top: $base-size;
+    }
+  }
+  
+  // Carousel //
+  
+  .row-opinion{
+    gap: $base-size * 3;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .opinion-img{
+    width: $base-size * 17;
+    height: $base-size * 17;
+  
+    img{
+      width: 100%;
+      height: 100%;
+      border-radius: $radius;
+      object-fit: cover;
+    }
+  }
+  
+  .opinion-header{
+    text-transform: uppercase;
+  }
+  
+  .opinion-author{
+    font-style: italic;
+  }
+  
+  // Gallery //
+  
+  .gallery{
+    margin-top: $base-size * 10;
+  }
+  
+  .col-gallery{
+    flex: 1;
+    height: $base-size * 18;
+  }
+  
+  .gallery-img:hover{
+    .gallery-hover{
+      opacity: 1;
+  
+      i:hover{
+        color: $color-main;
+      }
+    }
+  }
+  
+  .gallery-hover{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $base-size;
+    font-size: $base-size * 2;
+    height: 100%;
+    width: 100%;
+    color: $color-light;
+    background-color: rgba(51, 51, 51, 0.6);
+    border-radius: $radius;
+    transition: $transition;
+    opacity: 0;
+  
+    i{
+      transition: $transition;
+    }
+  }
+  
+  .view-more{
+    color: $color-main;
+  }

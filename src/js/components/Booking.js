@@ -259,7 +259,7 @@ class Booking{
 
     thisBooking.dom.tablesWrapper.addEventListener('click', thisBooking.initTables());
 
-    thisBooking.dom.formSubmit.addEventListener('click', function(event){
+    thisBooking.dom.formSubmit.addEventListener('submit', function(event){
       event.preventDefault();
       thisBooking.sendBooking();
     })

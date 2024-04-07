@@ -2,6 +2,7 @@ import {settings, select, classNames} from './settings.js';
 import Product from './components/Product.js';
 import Cart from './components/Cart.js';
 import Booking from './components/Booking.js';
+import Home from './components/Home.js';
 
 const app = {
   initPages: function(){
@@ -112,6 +113,35 @@ const app = {
     thisApp.booking = new Booking(bookingContainer);
   },
 
+  initHome: function(){
+    const thisApp = this;
+
+    const homeContainer = document.querySelector(select.containerOf.home);
+
+    thisApp.home = new Home(homeContainer);
+
+    thisApp.order = document.querySelector(select.containerOf.orderBox);
+    thisApp.booking = document.querySelector(select.containerOf.bookBox);
+
+    thisApp.order.addEventListener('click', function(event){
+      event.preventDefault();
+      const clickedElement = event.target;
+      const getId = clickedElement.getAttribute("id");
+      if(clickedElement.getAttribute('name') === 'order-box'){
+        thisApp.activatePage(getId); thisApp.activatePage(getId);
+      }
+    })
+
+    thisApp.booking.addEventListener('click', function(event){
+      event.preventDefault();
+      const clickedElement = event.target;
+      const getId = clickedElement.getAttribute("id");
+      if(clickedElement.getAttribute('name') === 'booking-box'){
+        thisApp.activatePage(getId);
+      }
+    })
+  },
+
   init: function(){
     const thisApp = this;
     // console.log('*** App starting ***');
@@ -124,6 +154,7 @@ const app = {
     thisApp.initCart();
     thisApp.initPages();
     thisApp.initBooking();
+    thisApp.initHome();
   },
 };
 
